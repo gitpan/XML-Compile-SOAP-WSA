@@ -1,0 +1,21 @@
+--- #YAML:1.0
+name:                XML-Compile-SOAP-WSA
+version:             0.10
+abstract:            SOAP Web Service Addressing
+license:             perl
+author:              
+    - Mark Overmeer
+generated_by:        ExtUtils::MakeMaker version 6.42
+distribution_type:   module
+requires:     
+    File::Basename:                0
+    File::Spec:                    0
+    Log::Report:                   0.28
+    Test::More:                    0.54
+    Test::Pod:                     1.00
+    XML::Compile:                  1.16
+    XML::Compile::Cache:           0.96
+    XML::Compile::Tester:          0.06
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3
