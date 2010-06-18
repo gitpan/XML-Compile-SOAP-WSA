@@ -7,7 +7,7 @@ use strict;
 
 package XML::Compile::SOAP::WSA;
 use vars '$VERSION';
-$VERSION = '0.10';
+$VERSION = '0.11';
 
 use base 'XML::Compile::SOAP::Extension';
 
@@ -54,7 +54,6 @@ sub version() {shift->{version}}
 sub wsaNS()   {$versions{shift->{version}}{wsa}}
 
 #-----------
-
 
 sub _load_ns($$)
 {   my ($self, $schema, $fn) = @_;

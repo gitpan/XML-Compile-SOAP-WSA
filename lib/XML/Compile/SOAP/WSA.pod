@@ -71,6 +71,36 @@ The only option is currently C<WSL10MODULE>.
 
 =back
 
+=head2 WSDL11
+
+$obj-E<gt>B<wsdl11Init>(WSDL, ARGS)
+
+=over 4
+
+See L<XML::Compile::SOAP::Extension/"WSDL11">
+
+=back
+
+=head2 SOAP11
+
+$obj-E<gt>B<soap11ClientWrapper>(OPERATION, CALL, OPTIONS)
+
+=over 4
+
+See L<XML::Compile::SOAP::Extension/"SOAP11">
+
+=back
+
+$obj-E<gt>B<soap11OperationInit>(OPERATION, OPTIONS)
+
+XML::Compile::SOAP::WSA-E<gt>B<soap11OperationInit>(OPERATION, OPTIONS)
+
+=over 4
+
+See L<XML::Compile::SOAP::Extension/"SOAP11">
+
+=back
+
 =head2 Attributes
 
 $obj-E<gt>B<version>
@@ -88,8 +118,6 @@ $obj-E<gt>B<wsaNS>
 Returns the namespace used for this WSA version.
 
 =back
-
-=head2 Extending SOAP and WSDL
 
 =head2 SEE ALSO
 
@@ -111,8 +139,8 @@ F<http://www.w3.org/TR/ws-addr-wsdl>, 29 May 2006
 
 =head1 SEE ALSO
 
-This module is part of XML-Compile-SOAP-WSA distribution version 0.10,
-built on June 15, 2010. Website: F<http://perl.overmeer.net/xml-compile/>
+This module is part of XML-Compile-SOAP-WSA distribution version 0.11,
+built on June 18, 2010. Website: F<http://perl.overmeer.net/xml-compile/>
 
 All modules in this suite:
 L<XML::Compile>,

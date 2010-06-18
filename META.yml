@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                XML-Compile-SOAP-WSA
-version:             0.10
+version:             0.11
 abstract:            SOAP Web Service Addressing
 license:             perl
 author:              
@@ -15,6 +15,7 @@ requires:
     Test::Pod:                     1.00
     XML::Compile:                  1.16
     XML::Compile::Cache:           0.96
+    XML::Compile::SOAP:            2.15
     XML::Compile::Tester:          0.06
 meta-spec:
     url:     http://module-build.sourceforge.net/META-spec-v1.3.html

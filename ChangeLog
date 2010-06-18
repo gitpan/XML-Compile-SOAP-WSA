@@ -1,5 +1,8 @@
 
 ===== version history of XML::Compile::SOAP::WSA
 
-version 0.10:
+version 0.11: Fri Jun 18 08:59:02 CEST 2010
+	- dependency on XML::Compile::SOAP was missing
+
+version 0.10: Fri Jun 15
 	- initial release
