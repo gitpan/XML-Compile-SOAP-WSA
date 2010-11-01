@@ -7,13 +7,15 @@ use strict;
 
 package XML::Compile::SOAP::WSA;
 use vars '$VERSION';
-$VERSION = '0.11';
+$VERSION = '0.12';
 
 use base 'XML::Compile::SOAP::Extension';
 
 use Log::Report 'xml-compile-soap-wsa';
 
 use XML::Compile::SOAP::WSA::Util qw/WSA10MODULE WSA09 WSA10 WSDL11WSAW/;
+use XML::Compile::SOAP::Util      qw/WSDL11/;
+use XML::Compile::Util            qw/pack_type/;
 
 use File::Spec              ();
 use File::Basename          qw/dirname/;
@@ -53,6 +55,15 @@ sub init($)
 sub version() {shift->{version}}
 sub wsaNS()   {$versions{shift->{version}}{wsa}}
 
+# This is not uglier than the WSA etension does: if you do not
+# specify these attributes explicitly, everyone needs hacks.
+# documented in XML::Compile::SOAP::Operation
+
+sub XML::Compile::SOAP::Operation::wsaAction($)
+{  my ($self, $dir) = @_;
+   $dir eq 'INPUT' ? $self->{wsa}{action_input} : $self->{wsa}{action_output};
+}
+
 #-----------
 
 sub _load_ns($$)
@@ -71,6 +82,16 @@ sub wsdl11Init($@)
     trace "loading wsa $self->{version}";
     $self->_load_ns($wsdl, $def->{xsd});
     $self->_load_ns($wsdl, '20060512-wsaw.xsd');
+
+    my $wsa_action_ns = $self->version eq '0.9' ? $ns : WSDL11WSAW;
+    $wsdl->addHook
+      ( type  => pack_type(WSDL11, 'tParam')
+      , after => sub
+          { my ($xml, $data, $path) = @_;
+            $data->{wsa_action} = $xml->getAttributeNS($wsa_action_ns,'Action');
+            return $data;
+          }
+      );
 
     # For unknown reason, the FaultDetail header is described everywhere,
     # except in the schema.
@@ -92,9 +113,12 @@ _FAULTDETAIL
    $self;
 }
 
-sub soap11OperationInit($@)
-{   my ($self, $op, %args) = @_;
+sub soap11OperationInit($$)
+{   my ($self, $op, $args) = @_;
     my $ns = $self->wsaNS;
+
+    $op->{wsa}{action_input}  = $args->{input_def}{body}{wsa_action};
+    $op->{wsa}{action_output} = $args->{output_def}{body}{wsa_action};
 
     trace "adding wsa header logic";
     my $def = $versions{$self->{version}};
@@ -107,14 +131,31 @@ sub soap11OperationInit($@)
     $op->addHeader(OUTPUT => wsa_FaultDetail => "{$ns}FaultDetail");
 }
 
-sub soap11ClientWrapper($$@)
-{   my ($self, $op, $call, %args) = @_;
-    my $to     = $args{To}     || ($op->endPoints)[0];
-    my $action = $args{Action} || $op->soapAction;
+sub soap11ClientWrapper($$$)
+{   my ($self, $op, $call, $args) = @_;
+    my $to     = ($op->endPoints)[0];
+    my $action = $op->wsaAction('INPUT') || $op->soapAction;
+#   my $outact = $op->wsaAction('OUTPUT');
 
-    trace "added wsa in call $to for $action";
+    trace "added wsa in call $to".($action ? " for $action" : '');
     sub
-    {   $call->(wsa_To => $to, wsa_Action => $action, @_);
+    {   # wsa:* automatically overridden by explicit values
+        $call->(wsa_To => $to, wsa_Action => $action, @_);
+
+        # should we check that the wsa_Action in the reply is correct?
+    };
+}
+
+sub soap11HandlerWrapper($$$)
+{   my ($self, $op, $cb, $args) = @_;
+    my $outact = $op->wsaAction('OUTPUT');
+    defined $outact
+        or return $cb;
+
+    sub
+    {   my $data = $cb->(@_);
+        $data->{wsa_Action} = $outact;
+        $data;
     };
 }
 

@@ -18,11 +18,12 @@ XML::Compile::SOAP::WSA - SOAP Web Service Addressing
 
  # use WSA via WSDL
  my $wsdl = XML::Compile::WSDL11->new(...);
- $wsdl->extension($wsa);
  my $call = $wsdl->compileClient('some_operation');
 
  # wsa header fields start with wsa_
  my ($data, $trace) = $call->(wsa_MessageID => 'xyz', %data);
+
+ print $wsdl->operation('myop')->wsaAction;
 
 =head1 DESCRIPTION
 
@@ -75,6 +76,8 @@ The only option is currently C<WSL10MODULE>.
 
 $obj-E<gt>B<wsdl11Init>(WSDL, ARGS)
 
+XML::Compile::SOAP::WSA-E<gt>B<wsdl11Init>(WSDL, ARGS)
+
 =over 4
 
 See L<XML::Compile::SOAP::Extension/"WSDL11">
@@ -83,7 +86,7 @@ See L<XML::Compile::SOAP::Extension/"WSDL11">
 
 =head2 SOAP11
 
-$obj-E<gt>B<soap11ClientWrapper>(OPERATION, CALL, OPTIONS)
+$obj-E<gt>B<soap11ClientWrapper>(OPERATION, CALL, ARGS)
 
 =over 4
 
@@ -91,9 +94,17 @@ See L<XML::Compile::SOAP::Extension/"SOAP11">
 
 =back
 
-$obj-E<gt>B<soap11OperationInit>(OPERATION, OPTIONS)
+$obj-E<gt>B<soap11HandlerWrapper>(OPERATION, CALLBACK, ARGS)
 
-XML::Compile::SOAP::WSA-E<gt>B<soap11OperationInit>(OPERATION, OPTIONS)
+=over 4
+
+See L<XML::Compile::SOAP::Extension/"SOAP11">
+
+=back
+
+$obj-E<gt>B<soap11OperationInit>(OPERATION, ARGS)
+
+XML::Compile::SOAP::WSA-E<gt>B<soap11OperationInit>(OPERATION, ARGS)
 
 =over 4
 
@@ -139,8 +150,8 @@ F<http://www.w3.org/TR/ws-addr-wsdl>, 29 May 2006
 
 =head1 SEE ALSO
 
-This module is part of XML-Compile-SOAP-WSA distribution version 0.11,
-built on June 18, 2010. Website: F<http://perl.overmeer.net/xml-compile/>
+This module is part of XML-Compile-SOAP-WSA distribution version 0.12,
+built on November 01, 2010. Website: F<http://perl.overmeer.net/xml-compile/>
 
 All modules in this suite:
 L<XML::Compile>,
@@ -154,7 +165,7 @@ L<XML::Compile::Dumper>,
 L<XML::Compile::RPC>,
 and
 L<XML::Rewrite>,
-L<XML::ExistDB>,
+L<XML::eXistDB>,
 L<XML::LibXML::Simple>.
 
 Please post questions or ideas to the mailinglist at

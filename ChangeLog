@@ -1,8 +1,16 @@
 
 ===== version history of XML::Compile::SOAP::WSA
 
+version 0.12: Mon Nov  1 17:14:36 CET 2010
+	- remove extension() call from the docs. Discovered
+	  by [Patrick Powel]
+	- remove dependency on Test::Pod
+	- automatic addition of wsa:Action to client and server
+	  messages, if the operation knows about them.
+
 version 0.11: Fri Jun 18 08:59:02 CEST 2010
 	- dependency on XML::Compile::SOAP was missing
+	  [cpantesters]
 
 version 0.10: Fri Jun 15
 	- initial release

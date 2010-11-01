@@ -4,17 +4,16 @@ use 5.008;
 
 WriteMakefile
  ( NAME	 	=> 'XML::Compile::SOAP::WSA'
- , VERSION	=> '0.11'
+ , VERSION	=> '0.12'
 
  , PREREQ_PM    =>
      { XML::Compile         => '1.16'
      , XML::Compile::Tester => '0.06'
      , XML::Compile::Cache  => '0.96'
-     , XML::Compile::SOAP   => '2.15'
+     , XML::Compile::SOAP   => '2.18'
      , Log::Report          => '0.28'
 
      , Test::More           => 0.54
-     , Test::Pod            => '1.00'
      , File::Spec           => 0
      , File::Basename       => 0
      }
