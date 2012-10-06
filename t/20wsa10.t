@@ -124,6 +124,8 @@ $wsdl->importDefinitions($xml_xsd);
 $wsdl->addWSDL($xml_wsdl);
 
 my $op  = eval { $wsdl->operation('GetLastTradePrice') };
+#print $op->explain($wsdl, PERL => 'INPUT', recurse => 1);
+
 my $err = $@ || '';
 ok(defined $op, 'existing operation');
 is($@, '', 'no errors');

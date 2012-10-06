@@ -1,13 +1,13 @@
-# Copyrights 2010 by Mark Overmeer.
+# Copyrights 2010-2012 by [Mark Overmeer].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.06.
+# Pod stripped from pm file by OODoc 2.00.
 use warnings;
 use strict;
 
 package XML::Compile::SOAP::WSA;
 use vars '$VERSION';
-$VERSION = '0.12';
+$VERSION = '0.13';
 
 use base 'XML::Compile::SOAP::Extension';
 
@@ -72,12 +72,13 @@ sub _load_ns($$)
     $schema->importDefinitions($xsd);
 }
 
-sub wsdl11Init($@)
+sub wsdl11Init($$)
 {   my ($self, $wsdl, $args) = @_;
     my $def = $versions{$self->{version}};
 
     my $ns = $self->wsaNS;
     $wsdl->prefixes(wsa => $ns, wsaw => WSDL11WSAW);
+    $wsdl->addKeyRewrite('PREFIXED(wsa,wsaw)');
 
     trace "loading wsa $self->{version}";
     $self->_load_ns($wsdl, $def->{xsd});
@@ -93,8 +94,8 @@ sub wsdl11Init($@)
           }
       );
 
-    # For unknown reason, the FaultDetail header is described everywhere,
-    # except in the schema.
+    # For unknown reason, the FaultDetail header is described everywhere
+    # in the docs, but missing from the schema.
     $wsdl->importDefinitions( <<_FAULTDETAIL );
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
      xmlns:tns="$ns" targetNamespace="$ns"

@@ -91,7 +91,6 @@ __WSDL
 ###
 
 my $wsa  = XML::Compile::SOAP::WSA->new(version => '1.0');
-
 my $wsdl = XML::Compile::WSDL11->new($xml_wsdl);
 
 my $op  = eval { $wsdl->operation('opCheckAvailability') };

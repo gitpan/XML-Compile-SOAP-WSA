@@ -4,13 +4,13 @@ use 5.008;
 
 WriteMakefile
  ( NAME	 	=> 'XML::Compile::SOAP::WSA'
- , VERSION	=> '0.12'
+ , VERSION	=> '0.13'
 
  , PREREQ_PM    =>
-     { XML::Compile         => '1.16'
+     { XML::Compile         => '1.28'
      , XML::Compile::Tester => '0.06'
      , XML::Compile::Cache  => '0.96'
-     , XML::Compile::SOAP   => '2.18'
+     , XML::Compile::SOAP   => '2.30'
      , Log::Report          => '0.28'
 
      , Test::More           => 0.54
@@ -30,8 +30,6 @@ sub MY::postamble { <<'__POSTAMBLE' }
 RAWDIR          = ../public_html/xml-compile-soap-wsa/raw
 DISTDIR         = ../public_html/xml-compile-soap-wsa/source
 LICENSE         = artistic
-
-EXTENDS		= ../XMLCache:../XMLCompile
 
 # for POD
 FIRST_YEAR      = 2010

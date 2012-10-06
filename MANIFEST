@@ -13,4 +13,5 @@ lib/XML/Compile/SOAP/WSA/xsd/20080723-wsa10.xsd
 t/20wsa10.t
 t/30wsdl11.t
 xt/99pod.t
-META.yml                                 Module meta-data (added by MakeMaker)
+META.yml                                 Module YAML meta-data (added by MakeMaker)
+META.json                                Module JSON meta-data (added by MakeMaker)
